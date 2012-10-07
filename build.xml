@@ -55,7 +55,7 @@
 	<target name="test-run" depends="compile" description="Run JUnit tests">
 		<mkdir dir="${test.report.dir}"/>
 		<echo message="Running JUnit Tests in directory ${source.dir}..."/>
-		<junit showoutput="true" printsummary="yes" failureproperty="junit.failure" fork="yes" forkmode="once" maxmemory="512m">
+		<junit haltonfailure="no" showoutput="true" printsummary="yes" failureproperty="junit.failure" fork="yes" forkmode="once" maxmemory="512m">
 			<formatter type="plain"/>
 			<formatter type="xml"/>
 			<batchtest todir="${test.report.dir}">
