@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>test</name>
-			<type>2</type>
-			<location>/home/darran/workspace/SolarCalculatorAndroid/test</location>
-		</link>
-	</linkedResources>
 </projectDescription>
