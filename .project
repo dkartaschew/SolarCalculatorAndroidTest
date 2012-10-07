@@ -3,6 +3,7 @@
 	<name>SolarCalculatorAndroidTest</name>
 	<comment></comment>
 	<projects>
+		<project>SolarCalculatorAndroid</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
