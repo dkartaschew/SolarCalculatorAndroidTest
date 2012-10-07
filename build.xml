@@ -19,7 +19,7 @@
 
 	<filelist id="libs_jars" dir="${libs.dir}">
 		<file name="junit.jar"/>
-		<file name="hamcrest.jar"/>
+		<!--<file name="hamcrest.jar"/> -->
 		<file name="robolectric-with-dependencies.jar"/>
 	</filelist>
 

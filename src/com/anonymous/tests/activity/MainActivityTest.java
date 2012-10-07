@@ -5,9 +5,7 @@ import com.anonymous.solar.android.*;
 import com.anonymous.tests.runner.SampleTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 @RunWith(SampleTestRunner.class)
 public class MainActivityTest {
@@ -18,8 +16,9 @@ public class MainActivityTest {
 	 */
 	@Test
     public void shouldHaveHappySmiles() throws Exception {
-        String hello = new MainActivity().getResources().getString(R.string.app_name);
-        assertThat(hello, equalTo("Solar Calculator for Android"));
+        String hello = new MainActivity().getString(R.string.app_name);
+        //assertThat(hello, equalTo("Solar Calculator for Android"));
+	assertTrue("Main Activity Name", hello.compareTo("Solar Calculator for Android") == 0);
     }
 	
 }
