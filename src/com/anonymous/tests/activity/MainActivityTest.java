@@ -1,7 +1,9 @@
 package com.anonymous.tests.activity;
 
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.anonymous.solar.android.*;
 
@@ -41,6 +43,22 @@ public class MainActivityTest {
 	}
 	
 	/**
+	 * Test Basic navigation.
+	 */
+	@Test 
+	public void basicNavigation() throws Exception {
+		next.performClick();	// Move to setup description;
+		View wizard = main.getWizard().getCurrentView();
+		TextView title = (TextView) wizard.findViewById(R.id.textViewSetupTitle);
+		assertTrue("On Setup Page", title != null);
+		
+		back.performClick();	// Move back to main page
+		wizard = main.getWizard().getCurrentView();
+		title = (TextView) wizard.findViewById(R.id.textViewTitle);
+		assertTrue("On Setup Page", title != null);
+	}
+	
+	/**
 	 * Basic test of setup description page.
 	 * @throws Exception
 	 */
@@ -50,6 +68,8 @@ public class MainActivityTest {
 		EditText setupName = (EditText) main.findViewById(R.id.editTextSetupName);
 		setupName.setText("Dummy");
 		next.performClick();
-		assertTrue("On Location Page", main.getWizard().getCurrentView().getId() == R.layout.wizard_location);
+		View wizard = main.getWizard().getCurrentView();
+		TextView title = (TextView) wizard.findViewById(R.id.textViewLocationTitle);
+		assertTrue("On Location Page", title != null);
 	}
 }

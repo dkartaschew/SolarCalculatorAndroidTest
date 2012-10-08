@@ -20,6 +20,9 @@
 	<filelist id="libs_jars" dir="${libs.dir}">
 		<file name="junit.jar"/>
 		<!--<file name="hamcrest.jar"/> -->
+		<file name="afreechart-0.0.4.jar" />
+		<file name="ksoap2-android-assembly-2.6.5-jar-with-dependencies.jar" />
+		<file name="simple-xml-2.6.7.jar" />
 		<file name="robolectric-with-dependencies.jar"/>
 	</filelist>
 
