@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.anonymous.solar.android.*;
 import com.anonymous.solar.shared.LocationData;
 import com.anonymous.solar.shared.SolarInverter;
+import com.anonymous.solar.shared.SolarPanelsException;
+import com.anonymous.solar.shared.SolarSetupException;
 
 import com.anonymous.tests.runner.SampleTestRunner;
 import com.xtremelabs.robolectric.Robolectric;
@@ -29,8 +31,6 @@ import com.xtremelabs.robolectric.shadows.ShadowView;
 
 import static com.xtremelabs.robolectric.Robolectric.clickOn;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -40,8 +40,8 @@ import static org.junit.Assert.*;
 /**
  * Basic high level tests of the Android Application.
  * 
- * Tests are fairly coarse grained, as much of the data is pulled in from GAE, so
- * may modify results in an unpredictable manner.
+ * Tests are fairly coarse grained, as much of the data is pulled in from GAE,
+ * so may modify results in an unpredictable manner.
  * 
  * @author 07627505 Darran Kartaschew
  * @version 1.0
@@ -144,7 +144,7 @@ public class MainActivityTest {
 
 		AlertDialog alert = ShadowAlertDialog.getLatestAlertDialog();
 		ShadowAlertDialog shadowAlert = Robolectric.shadowOf(alert);
-		assertThat("Invalid Parameter, please ensure a name is present", equalTo(shadowAlert.getMessage()));
+		assertTrue("Dialg expected", shadowAlert.getMessage().compareTo("Invalid Parameter, please ensure a name is present") == 0);
 
 	}
 
@@ -204,8 +204,7 @@ public class MainActivityTest {
 
 		AlertDialog alert = ShadowAlertDialog.getLatestAlertDialog();
 		ShadowAlertDialog shadowAlert = Robolectric.shadowOf(alert);
-		assertThat("Invalid Location, please ensure a location name has been entered",
-				equalTo(shadowAlert.getMessage()));
+		assertTrue("Expected Dialog", shadowAlert.getMessage().compareTo("Invalid Location, please ensure a location name has been entered")==0);
 
 	}
 
@@ -287,7 +286,7 @@ public class MainActivityTest {
 		clickOn(next);
 		AlertDialog alert = ShadowAlertDialog.getLatestAlertDialog();
 		ShadowAlertDialog shadowAlert = Robolectric.shadowOf(alert);
-		assertThat("Please enter at least 1 valid amount.", equalTo(shadowAlert.getMessage()));
+		assertTrue("Expected Dialog", shadowAlert.getMessage().compareTo("Please enter at least 1 valid amount.")==0);
 	}
 
 	/**
@@ -413,10 +412,10 @@ public class MainActivityTest {
 		tariffPage();
 
 		// Set a standard inverter.
-		SolarInverter invertor = new SolarInverter("Dummy", "Dummy", "Dummy", 1000.0, 0.1, 99.0, 0.1, 0.2, 25  );
+		SolarInverter invertor = new SolarInverter("Dummy", "Dummy", "Dummy", 1000.0, 0.1, 99.0, 0.1, 0.2, 25);
 		main.getSolarSetup().setInverter(invertor);
 		clickOn(next);
-		
+
 		View wizard = main.getWizard().getCurrentView();
 		TextView title = (TextView) wizard.findViewById(R.id.textViewInverterTitle);
 		assertTrue("On Inverter Page", title != null);
@@ -430,7 +429,7 @@ public class MainActivityTest {
 	@Test
 	public void inverterPage2() throws Exception {
 		inverterPage();
-		SolarInverter invertor = new SolarInverter("Dummy", "Dummy", "Dummy", 1000.0, 0.1, 99.0, 0.1, 0.2, 25  );
+		SolarInverter invertor = new SolarInverter("Dummy", "Dummy", "Dummy", 1000.0, 0.1, 99.0, 0.1, 0.2, 25);
 		main.getSolarSetup().setInverter(invertor);
 		clickOn(next);
 
@@ -474,7 +473,7 @@ public class MainActivityTest {
 
 		Dialog alert = ShadowDialog.getLatestDialog();
 		ShadowDialog shadowAlert = Robolectric.shadowOf(alert);
-		assertThat("Edit Inverter Information", equalTo(shadowAlert.getTitle()));
+		assertTrue("Expected Dialog", shadowAlert.getTitle().toString().compareTo("Edit Inverter Information")==0);
 
 	}
 
@@ -498,7 +497,7 @@ public class MainActivityTest {
 
 		AlertDialog alert = ShadowAlertDialog.getLatestAlertDialog();
 		ShadowAlertDialog shadowAlert = Robolectric.shadowOf(alert);
-		assertThat("Edit Inverter Information", equalTo(shadowAlert.getTitle()));
+		assertTrue("Expected Dialog", shadowAlert.getTitle().toString().compareTo("Edit Inverter Information")==0);
 
 		// Add some information.
 		EditText life = (EditText) shadowAlert.findViewById(R.id.editTextInverterEditLife);
@@ -524,7 +523,7 @@ public class MainActivityTest {
 
 		AlertDialog alert = ShadowAlertDialog.getLatestAlertDialog();
 		ShadowAlertDialog shadowAlert = Robolectric.shadowOf(alert);
-		assertThat("Please enter a wire length", equalTo(shadowAlert.getMessage()));
+		assertTrue("Expected Dialog", shadowAlert.getMessage().compareTo("Please enter a wire length")==0);
 	}
 
 	/**
@@ -540,7 +539,7 @@ public class MainActivityTest {
 
 		AlertDialog alert = ShadowAlertDialog.getLatestAlertDialog();
 		ShadowAlertDialog shadowAlert = Robolectric.shadowOf(alert);
-		assertThat("Please enter a wire efficiency between 0.00% and 100%", equalTo(shadowAlert.getMessage()));
+		assertTrue("Expected Dialog", shadowAlert.getMessage().compareTo("Please enter a wire efficiency between 0.00% and 100%")==0);
 	}
 
 	/**
@@ -556,7 +555,7 @@ public class MainActivityTest {
 
 		AlertDialog alert = ShadowAlertDialog.getLatestAlertDialog();
 		ShadowAlertDialog shadowAlert = Robolectric.shadowOf(alert);
-		assertThat("Invalid parameters entered, please ensure values entered are correct", equalTo(shadowAlert.getMessage()));
+		assertTrue("Expected Dialog", shadowAlert.getMessage().compareTo("Invalid parameters entered, please ensure values entered are correct")==0);
 	}
 
 	/**
@@ -572,7 +571,8 @@ public class MainActivityTest {
 
 		AlertDialog alert = ShadowAlertDialog.getLatestAlertDialog();
 		ShadowAlertDialog shadowAlert = Robolectric.shadowOf(alert);
-		assertThat("Wire Efficiency must be between 0.00% and 100.00%", equalTo(shadowAlert.getMessage()));
+		assertTrue("Expected Dialog", shadowAlert.getMessage().compareTo("Wire Efficiency must be between 0.00% and 100.00%")==0);
+
 	}
 
 	/********************************************************************************************
@@ -610,7 +610,7 @@ public class MainActivityTest {
 
 		AlertDialog alert = ShadowAlertDialog.getLatestAlertDialog();
 		ShadowAlertDialog shadowAlert = Robolectric.shadowOf(alert);
-		assertThat("Please enter at least 1 solar panel configuration", equalTo(shadowAlert.getMessage()));
+		assertTrue("Expected Dialog", shadowAlert.getMessage().compareTo("Please enter at least 1 solar panel configuration")==0);
 	}
 
 	/**
@@ -684,7 +684,7 @@ public class MainActivityTest {
 
 		Dialog alert = ShadowDialog.getLatestDialog();
 		ShadowDialog shadowAlert = Robolectric.shadowOf(alert);
-		assertThat("Modify Panel Configuration", equalTo(shadowAlert.getTitle()));
+		assertTrue("Expected Dialog", shadowAlert.getTitle().toString().compareTo("Modify Panel Configuration")==0);
 	}
 
 	/**
@@ -707,7 +707,7 @@ public class MainActivityTest {
 
 		Dialog alert = ShadowDialog.getLatestDialog();
 		ShadowDialog shadowAlert = Robolectric.shadowOf(alert);
-		assertThat("Edit Panel Information", equalTo(shadowAlert.getTitle()));
+		assertTrue("Expected Dialog", shadowAlert.getTitle().toString().compareTo("Edit Panel Information")==0);
 	}
 
 	/**
@@ -764,7 +764,7 @@ public class MainActivityTest {
 
 		AlertDialog alert = ShadowAlertDialog.getLatestAlertDialog();
 		ShadowAlertDialog shadowAlert = Robolectric.shadowOf(alert);
-		assertThat("Invalid Parameter, please ensure a year value is present", equalTo(shadowAlert.getMessage()));
+		assertTrue("Expected Dialog", shadowAlert.getMessage().compareTo("Invalid Parameter, please ensure a year value is present")==0);
 	}
 
 	/**
@@ -776,13 +776,13 @@ public class MainActivityTest {
 	@Test
 	public void confimationPageNext() throws Exception {
 		confimationPage();
-		
+
 		ShadowHandler.idleMainLooper();
-		
+
 		clickOn(next);
-		
+
 		ShadowHandler.idleMainLooper();
-		
+
 		View wizard = main.getWizard().getCurrentView();
 		TextView title = (TextView) wizard.findViewById(R.id.textViewConfirmationTitle);
 		assertTrue("Off Solar Page", title == null);
@@ -808,7 +808,7 @@ public class MainActivityTest {
 		TextView title = (TextView) wizard.findViewById(R.id.textViewResultsTitle);
 		assertTrue("On Results Page", title != null);
 	}
-	
+
 	/**
 	 * Basic test of results page, check for 3 tabs.
 	 * 
@@ -823,7 +823,7 @@ public class MainActivityTest {
 		TabHost tab = (TabHost) wizard.findViewById(R.id.tabHostResults);
 		assertTrue("On Results Page", tab.getChildCount() == 3);
 	}
-	
+
 	/**
 	 * Basic test of results page, check for tab 1 header.
 	 * 
@@ -835,14 +835,14 @@ public class MainActivityTest {
 		resultsPage();
 
 		View wizard = main.getWizard().getCurrentView();
-		
+
 		ShadowTabHost shadowTabHost = (ShadowTabHost) Robolectric.shadowOf(wizard.findViewById(R.id.tabHostResults));
-        shadowTabHost.setCurrentTab(0);
-        ShadowTabSpec tab = Robolectric.shadowOf(shadowTabHost.getCurrentTabSpec());
-		
+		shadowTabHost.setCurrentTab(0);
+		ShadowTabSpec tab = Robolectric.shadowOf(shadowTabHost.getCurrentTabSpec());
+
 		assertTrue("On Results Summary Page", tab.getText().compareTo("Summary") == 0);
 	}
-	
+
 	/**
 	 * Basic test of results page, check for tab 2 header.
 	 * 
@@ -854,14 +854,14 @@ public class MainActivityTest {
 		resultsPage();
 
 		View wizard = main.getWizard().getCurrentView();
-		
+
 		ShadowTabHost shadowTabHost = (ShadowTabHost) Robolectric.shadowOf(wizard.findViewById(R.id.tabHostResults));
-        shadowTabHost.setCurrentTab(1);
-        ShadowTabSpec tab = Robolectric.shadowOf(shadowTabHost.getCurrentTabSpec());
-		
+		shadowTabHost.setCurrentTab(1);
+		ShadowTabSpec tab = Robolectric.shadowOf(shadowTabHost.getCurrentTabSpec());
+
 		assertTrue("On Results Summary Page", tab.getText().compareTo("Graph") == 0);
 	}
-	
+
 	/**
 	 * Basic test of results page, check for tab 2 header.
 	 * 
@@ -873,14 +873,14 @@ public class MainActivityTest {
 		resultsPage();
 
 		View wizard = main.getWizard().getCurrentView();
-		
+
 		ShadowTabHost shadowTabHost = (ShadowTabHost) Robolectric.shadowOf(wizard.findViewById(R.id.tabHostResults));
-        shadowTabHost.setCurrentTab(2);
-        ShadowTabSpec tab = Robolectric.shadowOf(shadowTabHost.getCurrentTabSpec());
-		
+		shadowTabHost.setCurrentTab(2);
+		ShadowTabSpec tab = Robolectric.shadowOf(shadowTabHost.getCurrentTabSpec());
+
 		assertTrue("On Results Summary Page", tab.getText().compareTo("Details") == 0);
 	}
-	
+
 	/**
 	 * Basic test of results page
 	 * 
