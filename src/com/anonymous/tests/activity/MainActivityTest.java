@@ -317,7 +317,7 @@ public class MainActivityTest {
 	public void usagePageInput2() throws Exception {
 		usagePage();
 
-		EditText amount = (EditText) main.findViewById(R.id.editTextUsageDayTime);
+		EditText amount = (EditText) main.findViewById(R.id.editTextUsageDaily);
 		amount.setText("1.0");
 
 		clickOn(next);
